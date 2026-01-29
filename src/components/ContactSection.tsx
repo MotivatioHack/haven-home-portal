@@ -2,7 +2,7 @@ import { Phone, Mail, MapPin, Clock } from 'lucide-react';
 
 export const ContactSection = () => {
   return (
-    <section id="contact" className="society-section bg-muted/50">
+    <section id="contact" className="society-section bg-[#f5f9fb] dark:bg-muted/50">
       <div className="society-container">
         <div className="text-center mb-12">
           <h2 className="society-heading mb-4">Contact Us</h2>
