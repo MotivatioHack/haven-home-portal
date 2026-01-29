@@ -1,6 +1,6 @@
 export const AboutSection = () => {
   return (
-    <section id="about" className="society-section bg-background">
+    <section id="about" className="society-section bg-[#f5f9fb] dark:bg-muted/50">
       <div className="society-container">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="society-heading mb-6">About Our Society</h2>
