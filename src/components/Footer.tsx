@@ -5,21 +5,22 @@ import buildingWatermark from '@/assets/building-watermark.png';
 export const Footer = () => {
   return (
     <footer className="relative bg-foreground text-background overflow-hidden">
-      {/* Watermark */}
+      {/* Background Watermark - Softly visible */}
       <div 
-        className="absolute bottom-0 right-0 w-96 h-96 opacity-5 pointer-events-none"
+        className="absolute inset-0 opacity-[0.08] pointer-events-none"
         style={{
           backgroundImage: `url(${buildingWatermark})`,
-          backgroundSize: 'contain',
+          backgroundSize: '400px auto',
           backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'bottom right',
+          backgroundPosition: 'right bottom',
         }}
       />
 
       <div className="society-container py-12 relative z-10">
-        <div className="grid md:grid-cols-4 gap-8">
-          {/* Logo & About */}
-          <div className="md:col-span-2">
+        {/* 3-Column Grid Layout */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+          {/* Left Column - Logo & About */}
+          <div>
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center">
                 <Building2 className="w-6 h-6 text-primary-foreground" />
@@ -31,38 +32,58 @@ export const Footer = () => {
                 <p className="text-xs text-background/60">Housing Society</p>
               </div>
             </div>
-            <p className="text-sm text-background/70 max-w-md">
+            <p className="text-sm text-background/70 leading-relaxed">
               A premier residential community dedicated to providing a safe, clean, 
               and harmonious living environment for all our residents since 1998.
             </p>
           </div>
 
-          {/* Quick Links */}
+          {/* Middle Column - Quick Links */}
           <div>
             <h4 className="font-heading font-semibold mb-4 text-background">Quick Links</h4>
             <ul className="space-y-2 text-sm text-background/70">
-              <li><a href="#about" className="hover:text-background transition-colors">About Us</a></li>
-              <li><a href="#complaints" className="hover:text-background transition-colors">File Complaint</a></li>
-              <li><a href="#notices" className="hover:text-background transition-colors">Notices</a></li>
-              <li><a href="#facilities" className="hover:text-background transition-colors">Facilities</a></li>
-              <li><Link to="/login" className="hover:text-background transition-colors">Resident Login</Link></li>
+              <li>
+                <a href="#about" className="hover:text-background transition-colors">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="#complaints" className="hover:text-background transition-colors">
+                  File Complaint
+                </a>
+              </li>
+              <li>
+                <a href="#notices" className="hover:text-background transition-colors">
+                  Notices
+                </a>
+              </li>
+              <li>
+                <a href="#facilities" className="hover:text-background transition-colors">
+                  Facilities
+                </a>
+              </li>
+              <li>
+                <Link to="/login" className="hover:text-background transition-colors">
+                  Resident Login
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Contact */}
+          {/* Right Column - Contact */}
           <div>
             <h4 className="font-heading font-semibold mb-4 text-background">Contact Info</h4>
             <ul className="space-y-3 text-sm text-background/70">
-              <li className="flex items-center gap-2">
-                <Phone className="w-4 h-4" />
-                +91 22 1234 5678
+              <li className="flex items-center gap-3">
+                <Phone className="w-4 h-4 flex-shrink-0" />
+                <span>+91 22 1234 5678</span>
               </li>
-              <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4" />
-                office@greenvalley.com
+              <li className="flex items-center gap-3">
+                <Mail className="w-4 h-4 flex-shrink-0" />
+                <span>office@greenvalley.com</span>
               </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="w-4 h-4 mt-0.5" />
+              <li className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 flex-shrink-0 mt-0.5" />
                 <span>Sector 15, New Town<br />Mumbai - 400001</span>
               </li>
             </ul>

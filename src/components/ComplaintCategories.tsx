@@ -10,6 +10,7 @@ import {
   Wrench 
 } from 'lucide-react';
 import { ComplaintFormModal } from './ComplaintFormModal';
+import { Button } from './ui/button';
 
 const categories = [
   {
@@ -66,6 +67,12 @@ export const ComplaintCategories = () => {
     setIsModalOpen(true);
   };
 
+  const handleCTAClick = () => {
+    // Open modal with first category as default, user can select from dropdown
+    setSelectedCategory(null);
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       <section id="complaints" className="society-section bg-muted/50">
@@ -96,6 +103,20 @@ export const ComplaintCategories = () => {
                 </p>
               </div>
             ))}
+          </div>
+
+          {/* Helper text and CTA button */}
+          <div className="text-center mt-10">
+            <p className="text-muted-foreground mb-4">
+              Select a category above to register your complaint.
+            </p>
+            <Button 
+              onClick={handleCTAClick}
+              size="lg"
+              className="px-8"
+            >
+              Register a Complaint
+            </Button>
           </div>
         </div>
       </section>
