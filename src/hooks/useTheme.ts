@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 
-type Theme = 'light' | 'dark' | 'fancy';
+type Theme = 'light' | 'dark';
 
 export const useTheme = () => {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('society-theme') as Theme;
-      return saved || 'light';
+      return saved === 'dark' ? 'dark' : 'light';
     }
     return 'light';
   });
