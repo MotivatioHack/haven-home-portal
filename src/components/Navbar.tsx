@@ -8,12 +8,12 @@ export const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navLinks = [
-    { name: 'Home', href: '#home' },
-    { name: 'About', href: '#about' },
-    { name: 'Complaints', href: '#complaints' },
-    { name: 'Notices', href: '#notices' },
-    { name: 'Facilities', href: '#facilities' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
+    { name: 'Complaints', href: '/complaints' },
+    { name: 'Notices', href: '/notices' },
+    { name: 'Facilities', href: '/facilities' },
+    { name: 'Contact', href: '/contact' },
   ];
 
   return (
@@ -33,16 +33,15 @@ export const Navbar = () => {
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
-              <a
+              <Link
                 key={link.name}
-                href={link.href}
+                to={link.href}
                 className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
               >
                 {link.name}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -72,14 +71,14 @@ export const Navbar = () => {
           <div className="lg:hidden py-4 border-t border-border animate-fade-in">
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
-                <a
+                <Link
                   key={link.name}
-                  href={link.href}
+                  to={link.href}
                   onClick={() => setIsMenuOpen(false)}
                   className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors py-2"
                 >
                   {link.name}
-                </a>
+                </Link>
               ))}
               <Link
                 to="/login"
