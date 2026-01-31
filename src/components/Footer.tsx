@@ -1,22 +1,10 @@
 import { Link } from 'react-router-dom';
 import { Building2, Phone, Mail, MapPin } from 'lucide-react';
-import buildingWatermark from '@/assets/building-watermark.png';
 
 export const Footer = () => {
   return (
-    <footer className="relative bg-foreground text-background overflow-hidden">
-      {/* Background Watermark - Softly visible */}
-      <div 
-        className="absolute inset-0 opacity-[0.08] pointer-events-none"
-        style={{
-          backgroundImage: `url(${buildingWatermark})`,
-          backgroundSize: '400px auto',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'right bottom',
-        }}
-      />
-
-      <div className="society-container py-12 relative z-10">
+    <footer className="bg-foreground text-background">
+      <div className="society-container py-12">
         {/* 3-Column Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
           {/* Left Column - Logo & About */}
@@ -43,24 +31,24 @@ export const Footer = () => {
             <h4 className="font-heading font-semibold mb-4 text-background">Quick Links</h4>
             <ul className="space-y-2 text-sm text-background/70">
               <li>
-                <a href="#about" className="hover:text-background transition-colors">
+                <Link to="/about" className="hover:text-background transition-colors">
                   About Us
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#complaints" className="hover:text-background transition-colors">
+                <Link to="/complaints" className="hover:text-background transition-colors">
                   File Complaint
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#notices" className="hover:text-background transition-colors">
+                <Link to="/notices" className="hover:text-background transition-colors">
                   Notices
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#facilities" className="hover:text-background transition-colors">
+                <Link to="/facilities" className="hover:text-background transition-colors">
                   Facilities
-                </a>
+                </Link>
               </li>
               <li>
                 <Link to="/login" className="hover:text-background transition-colors">

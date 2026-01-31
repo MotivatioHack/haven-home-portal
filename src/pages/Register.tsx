@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Building2, Eye, EyeOff, ChevronDown } from 'lucide-react';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
-import buildingWatermark from '@/assets/building-watermark.png';
 
 const towers = ['A', 'B', 'C', 'D', 'E', 'F'];
 const floorNumbers = Array.from({ length: 15 }, (_, i) => i + 1);
@@ -29,16 +28,6 @@ const Register = () => {
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-4 py-8 relative">
-      {/* Watermark background */}
-      <div 
-        className="absolute bottom-0 left-0 w-[500px] h-[500px] opacity-[0.06] pointer-events-none"
-        style={{
-          backgroundImage: `url(${buildingWatermark})`,
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat',
-          backgroundPosition: 'bottom left',
-        }}
-      />
 
       {/* Theme switcher */}
       <div className="absolute top-4 right-4">
