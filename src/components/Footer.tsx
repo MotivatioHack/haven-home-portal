@@ -79,13 +79,8 @@ export const Footer = () => {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-6 border-t border-background/20 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-background/60">
+        <div className="mt-12 pt-6 border-t border-background/20 text-center text-sm text-background/60">
           <p>© 2026 Green Valley Housing Society. All rights reserved.</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-background transition-colors">Privacy Policy</a>
-            <a href="#" className="hover:text-background transition-colors">Terms of Use</a>
-            <a href="#" className="hover:text-background transition-colors">Society Rules</a>
-          </div>
         </div>
       </div>
     </footer>
