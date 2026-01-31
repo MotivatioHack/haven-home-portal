@@ -1,4 +1,4 @@
-import { Sun, Moon } from 'lucide-react';
+import { Sun, Moon, Rainbow } from 'lucide-react';
 import { useTheme } from '@/hooks/useTheme';
 
 export const ThemeSwitcher = () => {
@@ -27,6 +27,17 @@ export const ThemeSwitcher = () => {
         aria-label="Dark theme"
       >
         <Moon className="w-4 h-4" />
+      </button>
+      <button
+        onClick={() => toggleTheme('rainbow')}
+        className={`p-2 rounded-full transition-all duration-200 ${
+          theme === 'rainbow' 
+            ? 'bg-card text-primary shadow-sm' 
+            : 'text-muted-foreground hover:text-foreground'
+        }`}
+        aria-label="Rainbow theme"
+      >
+        <Rainbow className="w-4 h-4" />
       </button>
     </div>
   );
