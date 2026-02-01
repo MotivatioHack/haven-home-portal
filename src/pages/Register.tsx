@@ -1,14 +1,16 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Building2, Eye, EyeOff, ChevronDown } from 'lucide-react';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
+import { toast } from '@/hooks/use-toast';
 
 const towers = ['A', 'B', 'C', 'D', 'E', 'F'];
-const floorNumbers = Array.from({ length: 15 }, (_, i) => i + 1);
 
 const Register = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -20,10 +22,95 @@ const Register = () => {
     agreeTerms: false,
   });
 
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    // Full Name validation
+    if (!formData.fullName.trim()) {
+      newErrors.fullName = 'Full name is required';
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required';
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    // Phone validation (10 digits)
+    const phoneRegex = /^\d{10}$/;
+    const cleanPhone = formData.phone.replace(/\D/g, '');
+    if (!formData.phone.trim()) {
+      newErrors.phone = 'Phone number is required';
+    } else if (!phoneRegex.test(cleanPhone)) {
+      newErrors.phone = 'Phone must be 10 digits';
+    }
+
+    // Tower validation
+    if (!formData.tower) {
+      newErrors.tower = 'Please select a tower';
+    }
+
+    // Flat Number validation
+    if (!formData.flatNumber.trim()) {
+      newErrors.flatNumber = 'Flat number is required';
+    }
+
+    // Password validation
+    if (!formData.password) {
+      newErrors.password = 'Password is required';
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters';
+    }
+
+    // Confirm Password validation
+    if (!formData.confirmPassword) {
+      newErrors.confirmPassword = 'Please confirm your password';
+    } else if (formData.password !== formData.confirmPassword) {
+      newErrors.confirmPassword = 'Passwords do not match';
+    }
+
+    // Terms checkbox validation
+    if (!formData.agreeTerms) {
+      newErrors.agreeTerms = 'You must agree to the terms and policy';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle registration logic
-    console.log('Registration submitted:', formData);
+    
+    if (!validateForm()) {
+      toast({
+        title: 'Validation Error',
+        description: 'Please fix the errors in the form.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Store user data in localStorage
+    const userData = {
+      fullName: formData.fullName,
+      email: formData.email,
+      phone: formData.phone.replace(/\D/g, ''),
+      tower: formData.tower,
+      flatNumber: formData.flatNumber,
+      password: formData.password,
+    };
+
+    localStorage.setItem('registeredUser', JSON.stringify(userData));
+
+    toast({
+      title: 'Registration Successful!',
+      description: 'Your account has been created. Please login to continue.',
+    });
+
+    // Redirect to login page
+    navigate('/login');
   };
 
   return (
@@ -67,8 +154,8 @@ const Register = () => {
                 onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                 className="w-full px-4 py-3 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
                 placeholder="Enter your full name"
-                required
               />
+              {errors.fullName && <p className="text-sm text-destructive mt-1">{errors.fullName}</p>}
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -82,8 +169,8 @@ const Register = () => {
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full px-4 py-3 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
                   placeholder="your@email.com"
-                  required
                 />
+                {errors.email && <p className="text-sm text-destructive mt-1">{errors.email}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
@@ -95,8 +182,8 @@ const Register = () => {
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="w-full px-4 py-3 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
                   placeholder="+91 98765 43210"
-                  required
                 />
+                {errors.phone && <p className="text-sm text-destructive mt-1">{errors.phone}</p>}
               </div>
             </div>
 
@@ -111,7 +198,6 @@ const Register = () => {
                     value={formData.tower}
                     onChange={(e) => setFormData({ ...formData, tower: e.target.value })}
                     className="w-full px-4 py-3 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow appearance-none cursor-pointer"
-                    required
                   >
                     <option value="">Select</option>
                     {towers.map((tower) => (
@@ -120,6 +206,7 @@ const Register = () => {
                   </select>
                   <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
                 </div>
+                {errors.tower && <p className="text-sm text-destructive mt-1">{errors.tower}</p>}
               </div>
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">
@@ -131,8 +218,8 @@ const Register = () => {
                   onChange={(e) => setFormData({ ...formData, flatNumber: e.target.value })}
                   className="w-full px-4 py-3 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
                   placeholder="e.g., 101"
-                  required
                 />
+                {errors.flatNumber && <p className="text-sm text-destructive mt-1">{errors.flatNumber}</p>}
               </div>
             </div>
 
@@ -148,7 +235,6 @@ const Register = () => {
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className="w-full px-4 py-3 pr-12 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
                   placeholder="Min. 8 characters"
-                  required
                   minLength={8}
                 />
                 <button
@@ -159,6 +245,7 @@ const Register = () => {
                   {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
+              {errors.password && <p className="text-sm text-destructive mt-1">{errors.password}</p>}
             </div>
 
             <div>
@@ -172,7 +259,6 @@ const Register = () => {
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                   className="w-full px-4 py-3 pr-12 rounded-md border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring transition-shadow"
                   placeholder="Re-enter password"
-                  required
                 />
                 <button
                   type="button"
@@ -182,24 +268,27 @@ const Register = () => {
                   {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
               </div>
+              {errors.confirmPassword && <p className="text-sm text-destructive mt-1">{errors.confirmPassword}</p>}
             </div>
 
             {/* Terms */}
-            <label className="flex items-start gap-3 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={formData.agreeTerms}
-                onChange={(e) => setFormData({ ...formData, agreeTerms: e.target.checked })}
-                className="w-4 h-4 mt-0.5 rounded border-input text-primary focus:ring-ring"
-                required
-              />
-              <span className="text-sm text-muted-foreground">
-                I agree to the{' '}
-                <a href="#" className="text-primary hover:underline">Society Rules</a>
-                {' '}and{' '}
-                <a href="#" className="text-primary hover:underline">Privacy Policy</a>
-              </span>
-            </label>
+            <div>
+              <label className="flex items-start gap-3 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.agreeTerms}
+                  onChange={(e) => setFormData({ ...formData, agreeTerms: e.target.checked })}
+                  className="w-4 h-4 mt-0.5 rounded border-input text-primary focus:ring-ring"
+                />
+                <span className="text-sm text-muted-foreground">
+                  I agree to the{' '}
+                  <a href="#" className="text-primary hover:underline">Society Rules</a>
+                  {' '}and{' '}
+                  <a href="#" className="text-primary hover:underline">Privacy Policy</a>
+                </span>
+              </label>
+              {errors.agreeTerms && <p className="text-sm text-destructive mt-1">{errors.agreeTerms}</p>}
+            </div>
 
             <button
               type="submit"
