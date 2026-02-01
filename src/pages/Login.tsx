@@ -1,20 +1,57 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Building2, Eye, EyeOff } from 'lucide-react';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
+import { ForgotPasswordModal } from '@/components/ForgotPasswordModal';
+import { toast } from '@/hooks/use-toast';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
   const [formData, setFormData] = useState({
     flatNumber: '',
     password: '',
     rememberMe: false,
   });
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn');
+    if (isLoggedIn) {
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle login logic
-    console.log('Login submitted:', formData);
+    setError('');
+
+    const registeredUser = localStorage.getItem('registeredUser');
+    if (!registeredUser) {
+      setError('No registered user found. Please register first.');
+      return;
+    }
+
+    const user = JSON.parse(registeredUser);
+    const flatId = `${user.tower}-${user.flatNumber}`;
+
+    // Check if flatNumber matches (either full ID like A-101 or just the number)
+    const flatMatches = 
+      formData.flatNumber === flatId || 
+      formData.flatNumber === user.flatNumber ||
+      formData.flatNumber.toUpperCase() === flatId.toUpperCase();
+
+    if (flatMatches && formData.password === user.password) {
+      localStorage.setItem('isLoggedIn', 'true');
+      toast({
+        title: 'Login Successful',
+        description: `Welcome back, ${user.fullName}!`,
+      });
+      navigate('/dashboard');
+    } else {
+      setError('Invalid flat number or password. Please try again.');
+    }
   };
 
   return (
@@ -84,6 +121,10 @@ const Login = () => {
               </div>
             </div>
 
+            {error && (
+              <p className="text-sm text-destructive">{error}</p>
+            )}
+
             <div className="flex items-center justify-between">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -94,9 +135,13 @@ const Login = () => {
                 />
                 <span className="text-sm text-muted-foreground">Remember me</span>
               </label>
-              <a href="#" className="text-sm text-primary hover:underline">
+              <button 
+                type="button"
+                onClick={() => setForgotPasswordOpen(true)}
+                className="text-sm text-primary hover:underline"
+              >
                 Forgot Password?
-              </a>
+              </button>
             </div>
 
             <button
@@ -134,6 +179,12 @@ const Login = () => {
           </a>
         </p>
       </div>
+
+      {/* Forgot Password Modal */}
+      <ForgotPasswordModal 
+        open={forgotPasswordOpen} 
+        onOpenChange={setForgotPasswordOpen} 
+      />
     </div>
   );
 };
