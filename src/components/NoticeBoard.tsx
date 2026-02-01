@@ -123,9 +123,6 @@ export const NoticeBoard = () => {
             })}
           </div>
 
-          <div className="text-center mt-8">
-            <button onClick={handleViewAllNotices} className="society-btn-secondary">View All Notices</button>
-          </div>
         </div>
       </section>
 
