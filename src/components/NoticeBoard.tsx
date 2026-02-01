@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Pin, Calendar, AlertCircle, Info } from 'lucide-react';
 import { NoticeDetailModal } from './NoticeDetailModal';
 
@@ -58,10 +59,15 @@ const getNoticeIcon = (type: string) => {
 export const NoticeBoard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedNotice, setSelectedNotice] = useState<typeof notices[0] | null>(null);
+  const navigate = useNavigate();
 
   const handleNoticeClick = (notice: typeof notices[0]) => {
     setSelectedNotice(notice);
     setIsModalOpen(true);
+  };
+
+  const handleViewAllNotices = () => {
+    navigate('/notices');
   };
 
   return (
@@ -118,7 +124,7 @@ export const NoticeBoard = () => {
           </div>
 
           <div className="text-center mt-8">
-            <button className="society-btn-secondary">View All Notices</button>
+            <button onClick={handleViewAllNotices} className="society-btn-secondary">View All Notices</button>
           </div>
         </div>
       </section>
