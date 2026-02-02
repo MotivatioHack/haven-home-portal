@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
-import { DashboardLayout } from "@/components/layout/DashboardLayout";
-import { BackButton } from "@/components/layout/BackButton";
+import { DashboardLayout } from "@/components/layout/user/DashboardLayout";
+import { BackButton } from "@/components/layout/user/BackButton";
 import {
   Droplets,
   Lightbulb,
