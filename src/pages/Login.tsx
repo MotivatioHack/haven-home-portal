@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { useState } from 'react';
-=======
 import { useState, useEffect } from 'react';
->>>>>>> 75d75737ad76d5d94effaec64b4a78838242b659
 import { Link, useNavigate } from 'react-router-dom';
 import { Building2, Eye, EyeOff } from 'lucide-react';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
@@ -11,10 +7,6 @@ import { toast } from '@/hooks/use-toast';
 
 const Login = () => {
   const navigate = useNavigate();
-<<<<<<< HEAD
-
-=======
->>>>>>> 75d75737ad76d5d94effaec64b4a78838242b659
   const [showPassword, setShowPassword] = useState(false);
   const [forgotPasswordOpen, setForgotPasswordOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -27,20 +19,12 @@ const Login = () => {
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     if (isLoggedIn) {
-      navigate('/');
+      navigate('/blank');
     }
   }, [navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-<<<<<<< HEAD
-
-    // ✅ frontend login simulation
-    localStorage.setItem('isLoggedIn', 'true');
-
-    // ✅ open USER DASHBOARD after login
-    navigate('/dashboard');
-=======
     setError('');
 
     const registeredUser = localStorage.getItem('registeredUser');
@@ -52,7 +36,6 @@ const Login = () => {
     const user = JSON.parse(registeredUser);
     const flatId = `${user.tower}-${user.flatNumber}`;
 
-    // Check if flatNumber matches (either full ID like A-101 or just the number)
     const flatMatches = 
       formData.flatNumber === flatId || 
       formData.flatNumber === user.flatNumber ||
@@ -64,11 +47,10 @@ const Login = () => {
         title: 'Login Successful',
         description: `Welcome back, ${user.fullName}!`,
       });
-      navigate('/');
+      navigate('/blank');
     } else {
       setError('Invalid flat number or password. Please try again.');
     }
->>>>>>> 75d75737ad76d5d94effaec64b4a78838242b659
   };
 
   return (
@@ -166,12 +148,6 @@ const Login = () => {
                   Remember me
                 </span>
               </label>
-<<<<<<< HEAD
-
-              <span className="text-sm text-primary cursor-pointer">
-                Forgot Password?
-              </span>
-=======
               <button 
                 type="button"
                 onClick={() => setForgotPasswordOpen(true)}
@@ -179,7 +155,6 @@ const Login = () => {
               >
                 Forgot Password?
               </button>
->>>>>>> 75d75737ad76d5d94effaec64b4a78838242b659
             </div>
 
             <button

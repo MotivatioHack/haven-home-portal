@@ -1,9 +1,9 @@
-import { DashboardLayout } from "@/components/layout/DashboardLayout";
-import { WelcomeBanner } from "@/components/dashboard/WelcomeBanner";
-import { SummaryCards } from "@/components/dashboard/SummaryCards";
-import { QuickActions } from "@/components/dashboard/QuickActions";
-import { RecentComplaints } from "@/components/dashboard/RecentComplaints";
-import { UpcomingNotices } from "@/components/dashboard/UpcomingNotices";
+import { DashboardLayout } from "@/components/layout/user/DashboardLayout";
+import { WelcomeBanner } from "@/components/dashboard/user/WelcomeBanner";
+import { SummaryCards } from "@/components/dashboard/user/SummaryCards";
+import { QuickActions } from "@/components/dashboard/user/QuickActions";
+import { RecentComplaints } from "@/components/dashboard/user/RecentComplaints";
+import { UpcomingNotices } from "@/components/dashboard/user/UpcomingNotices";
 
 const Index = () => {
   return (
