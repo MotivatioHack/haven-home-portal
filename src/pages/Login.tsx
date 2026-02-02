@@ -19,7 +19,7 @@ const Login = () => {
   useEffect(() => {
     const isLoggedIn = localStorage.getItem('isLoggedIn');
     if (isLoggedIn) {
-      navigate('/blank');
+      navigate('/dashboard-placeholder');
     }
   }, [navigate]);
 
@@ -47,7 +47,7 @@ const Login = () => {
         title: 'Login Successful',
         description: `Welcome back, ${user.fullName}!`,
       });
-      navigate('/blank');
+      navigate('/dashboard-placeholder');
     } else {
       setError('Invalid flat number or password. Please try again.');
     }
